@@ -12,6 +12,8 @@ import ProductAdd from "./pages/admin/product/add";
 import ProductEditPage from "./pages/admin/product/edit";
 import { Toaster } from "@/components/ui/toaster";
 import CategoryDetail from "./pages/CategoryDetail";
+import Signin from "./pages/Signin";
+import CartPage from "./pages/Cart";
 
 function App() {
     return (
@@ -24,6 +26,8 @@ function App() {
                     <Route path="categories/:id" element={<CategoryDetail />} />
                     <Route path="about" element={<AboutPage />} />
                     <Route path="contact" element={<ContactPage />} />
+                    <Route path="signin" element={<Signin />} />
+                    <Route path="cart" element={<CartPage />} />
                 </Route>
                 <Route path="admin" element={<LayoutAdmin />}>
                     <Route path="products" element={<ProductManagement />} />

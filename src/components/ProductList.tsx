@@ -1,5 +1,8 @@
 import { useProductQuery } from "@/hooks/useProductQuery";
+import { useLocalStorage } from "@/hooks/useStorage";
 import { IProduct } from "@/interfaces/product";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 type ProductListProps = {
@@ -8,13 +11,31 @@ type ProductListProps = {
 };
 
 const ProductList = ({ featured, data }: ProductListProps) => {
+    const queryClient = useQueryClient();
+    const [user] = useLocalStorage("user", {});
+    const userId = user?.user?._id;
     const { data: products, isLoading, isError } = useProductQuery();
+    const { mutate } = useMutation({
+        mutationFn: async ({ productId, quantity }: { productId: string; quantity: number }) => {
+            const { data } = await axios.post(`http://localhost:8080/api/v1/carts/add-to-cart`, {
+                userId,
+                productId,
+                quantity,
+            });
+            return data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["cart", userId],
+            });
+        },
+    });
+
     const filteredProducts = featured
         ? products?.filter((product: IProduct) => product?.featured == featured)
         : data
         ? data
         : products;
-
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error</p>;
     return (
@@ -49,7 +70,12 @@ const ProductList = ({ featured, data }: ProductListProps) => {
                             >
                                 Quick View
                             </Link>
-                            <button className="btn product-action__addtocart">Add To Cart</button>
+                            <button
+                                className="btn product-action__addtocart"
+                                onClick={() => mutate({ productId: product._id, quantity: 1 })}
+                            >
+                                Add To Cart
+                            </button>
                             <div className="product-actions-more">
                                 <span className="product-action__share">Share</span>
                                 <span className="product-action__compare">Compare</span>

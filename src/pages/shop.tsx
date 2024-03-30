@@ -9,25 +9,15 @@ const ShopPage = () => {
     const [params] = useSearchParams();
     const page = params.get("page");
 
-    const [shouldRefetch, setShouldRefetch] = useState(false); // Biến trạng thái để kiểm soát việc gọi lại API
     const [limit, setLimit] = useState(10);
     const [currentPage, setCurrentPage] = useState(page || 1);
 
     const { data, isLoading, refetch } = useProductQuery({ _page: page, _limit: limit });
-
     useEffect(() => {
         if (page && +page !== currentPage) {
             setCurrentPage(+page);
-            setShouldRefetch(true);
         }
     }, [page, currentPage]);
-
-    useEffect(() => {
-        if (shouldRefetch) {
-            refetch();
-            setShouldRefetch(false);
-        }
-    }, [shouldRefetch, currentPage, refetch]);
 
     const handleLimitChange = (event: ChangeEvent<any>) => {
         setLimit(event.target.value);

@@ -1,46 +1,20 @@
-import { useProductQuery } from "@/hooks/useProductQuery";
-import { useLocalStorage } from "@/hooks/useStorage";
 import { IProduct } from "@/interfaces/product";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { Link } from "react-router-dom";
-
+import Pagination from "./Pagination";
 type ProductListProps = {
-    featured?: boolean;
-    data?: IProduct[];
+    products?: IProduct[];
+    pagination: {
+        currentPage: number;
+        totalPages: number;
+        totalItems: number;
+    };
 };
 
-const ProductList = ({ featured, data }: ProductListProps) => {
-    const queryClient = useQueryClient();
-    const [user] = useLocalStorage("user", {});
-    const userId = user?.user?._id;
-    const { data: products, isLoading, isError } = useProductQuery();
-    const { mutate } = useMutation({
-        mutationFn: async ({ productId, quantity }: { productId: string; quantity: number }) => {
-            const { data } = await axios.post(`http://localhost:8080/api/v1/carts/add-to-cart`, {
-                userId,
-                productId,
-                quantity,
-            });
-            return data;
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["cart", userId],
-            });
-        },
-    });
-
-    const filteredProducts = featured
-        ? products?.filter((product: IProduct) => product?.featured == featured)
-        : data
-        ? data
-        : products;
-    if (isLoading) return <p>Loading...</p>;
-    if (isError) return <p>Error</p>;
+const ProductList = ({ products, pagination }: ProductListProps) => {
+    const { totalPages } = pagination || { totalPages: 1 };
     return (
         <div className="product-list">
-            {filteredProducts?.map((product: IProduct, index: number) => {
+            {products?.map((product: IProduct, index: number) => {
                 return (
                     <div key={index} className="product-item">
                         <div className="product-image">
@@ -85,6 +59,9 @@ const ProductList = ({ featured, data }: ProductListProps) => {
                     </div>
                 );
             })}
+            <div className="pagination">
+                <Pagination totalPages={totalPages} />
+            </div>
         </div>
     );
 };

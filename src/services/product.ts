@@ -1,9 +1,10 @@
 import instance from "@/configs/axios";
 import { IProduct } from "@/interfaces/product";
 
-export const getAllProducts = async (): Promise<IProduct[]> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getAllProducts = async (params?: any): Promise<IProduct[]> => {
     try {
-        const response = await instance.get('/products');
+        const response = await instance.get('/products', { params });
         return response.data;
     } catch (error) {
         return [];

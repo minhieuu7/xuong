@@ -1,11 +1,13 @@
 import { getAllProducts, getProductById } from "@/services/product";
 import { useQuery } from "@tanstack/react-query";
 
-export const useProductQuery = (id?: number | string) => {
+// { id: 1, _limit: 10, _page: 1 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useProductQuery = (params?: any) => {
     const { data, ...rest } = useQuery({
-        queryKey: ["PRODUCT_KEY", id],
+        queryKey: ["PRODUCT_KEY", params],
         queryFn: async () => {
-            return id ? await getProductById(id as number | string) : await getAllProducts()
+            return params?.id ? await getProductById(params.id as number | string) : await getAllProducts(params)
         },
     });
 

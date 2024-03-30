@@ -5,13 +5,13 @@ import { Link, useParams } from "react-router-dom";
 
 const DetailProduct = () => {
     const { id } = useParams();
-    const { data: product, isLoading } = useProductQuery(id!);
+    const { data: product, isLoading } = useProductQuery({ id: id! });
     console.log(product);
     const { data: relatedProduct } = useQuery({
         queryKey: ["RELATED_PRODUCT"],
         queryFn: async () => {
             const { data } = await axios.get(
-                `http://localhost:8080/api/v1/products/${product.category}/related`
+                `http://localhost:8080/api/v1/products/${product.category}/related/${product._id}`
             );
             return data;
         },

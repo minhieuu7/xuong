@@ -10,8 +10,8 @@ const Catergories = () => {
             const { data } = await axios.get("http://localhost:8080/api/v1/categories");
             return data;
         },
+        staleTime: 60000, // Thời gian "cũ" được đặt là 1 phút (60000 miligiây)
     });
-    console.log(categories);
     return (
         <>
             <section className="news">

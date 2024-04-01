@@ -76,7 +76,9 @@ const ProductAdd = () => {
         mutation.mutate(product);
     };
     return (
-        <div style={{ border: "2px solid green" }}>
+        <div>
+            <h2 className="text-2xl font-semibold">Thêm sản phẩm</h2>
+            <hr className="my-5" />
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}

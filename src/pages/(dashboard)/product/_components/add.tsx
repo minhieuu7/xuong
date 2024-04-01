@@ -1,26 +1,33 @@
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import { Input } from '@/components/ui/input'
-import { IProduct } from '@/common/types/product'
-import { addProduct } from '@/services/product'
-import { joiResolver } from '@hookform/resolvers/joi'
-import { useMutation } from '@tanstack/react-query'
-import Joi from 'joi'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useToast } from '@/components/ui/use-toast'
+import { Input } from "@/components/ui/input";
+import { IProduct } from "@/common/types/product";
+import { addProduct } from "@/services/product";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useMutation } from "@tanstack/react-query";
+import Joi from "joi";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useToast } from "@/components/ui/use-toast";
 type Inputs = {
-    name: string
-    category?: string
-    price: number
+    name: string;
+    category?: string;
+    price: number;
     // gallery?: string[];
-    image: string
-    description: string
-    discount: number
-    featured: boolean
-    countInStock: number
-}
+    image: string;
+    description: string;
+    discount: number;
+    featured: boolean;
+    countInStock: number;
+};
 
 const productSchema = Joi.object({
     name: Joi.string().required(),
@@ -31,55 +38,58 @@ const productSchema = Joi.object({
     description: Joi.string(),
     discount: Joi.number(),
     featured: Joi.boolean(),
-    countInStock: Joi.number()
-})
+    countInStock: Joi.number(),
+});
 
 const ProductAdd = () => {
-    const { toast } = useToast()
+    const { toast } = useToast();
     const form = useForm({
         resolver: joiResolver(productSchema),
         defaultValues: {
-            name: '',
+            name: "",
             price: 0,
-            category: '',
+            category: "",
             // gallery: [],
-            image: '',
-            description: '',
+            image: "",
+            description: "",
             discount: 0,
             featured: false,
-            countInStock: 0
-        }
-    })
+            countInStock: 0,
+        },
+    });
 
     const mutation = useMutation({
         mutationFn: async (product: IProduct) => {
-            const { data } = await addProduct(product)
-            return data
+            const { data } = await addProduct(product);
+            return data;
         },
         onSuccess: () => {
-            form.reset()
+            form.reset();
             toast({
-                title: 'Thêm sản phẩm thành công',
-                variant: 'success'
-            })
-        }
-    })
+                title: "Thêm sản phẩm thành công",
+                variant: "success",
+            });
+        },
+    });
 
     const onSubmit: SubmitHandler<Inputs> = (product) => {
-        mutation.mutate(product)
-    }
+        mutation.mutate(product);
+    };
     return (
-        <div>
+        <div style={{ border: "2px solid green" }}>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
+                >
                     <FormField
                         control={form.control}
-                        name='name'
+                        name="name"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor='name'>Name</FormLabel>
+                                <FormLabel htmlFor="name">Name</FormLabel>
                                 <FormControl>
-                                    <Input {...field} id='name' />
+                                    <Input {...field} id="name" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -87,12 +97,12 @@ const ProductAdd = () => {
                     ></FormField>
                     <FormField
                         control={form.control}
-                        name='price'
+                        name="price"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor='price'>Giá</FormLabel>
+                                <FormLabel htmlFor="price">Giá</FormLabel>
                                 <FormControl>
-                                    <Input {...field} id='price' />
+                                    <Input {...field} id="price" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -100,12 +110,14 @@ const ProductAdd = () => {
                     ></FormField>
                     <FormField
                         control={form.control}
-                        name='category'
+                        name="category"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor='category'>Category</FormLabel>
+                                <FormLabel htmlFor="category">
+                                    Category
+                                </FormLabel>
                                 <FormControl>
-                                    <Input {...field} id='category' />
+                                    <Input {...field} id="category" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -126,12 +138,12 @@ const ProductAdd = () => {
                     /> */}
                     <FormField
                         control={form.control}
-                        name='image'
+                        name="image"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor='image'>Image</FormLabel>
+                                <FormLabel htmlFor="image">Image</FormLabel>
                                 <FormControl>
-                                    <Input {...field} id='image' />
+                                    <Input {...field} id="image" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -139,12 +151,14 @@ const ProductAdd = () => {
                     />
                     <FormField
                         control={form.control}
-                        name='description'
+                        name="description"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor='description'>Description</FormLabel>
+                                <FormLabel htmlFor="description">
+                                    Description
+                                </FormLabel>
                                 <FormControl>
-                                    <Input {...field} id='description' />
+                                    <Input {...field} id="description" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -152,12 +166,14 @@ const ProductAdd = () => {
                     />
                     <FormField
                         control={form.control}
-                        name='discount'
+                        name="discount"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor='discount'>Discount</FormLabel>
+                                <FormLabel htmlFor="discount">
+                                    Discount
+                                </FormLabel>
                                 <FormControl>
-                                    <Input {...field} id='discount' />
+                                    <Input {...field} id="discount" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -165,26 +181,29 @@ const ProductAdd = () => {
                     />
                     <FormField
                         control={form.control}
-                        name='featured'
+                        name="featured"
                         render={({ field }) => (
-                            <FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4'>
+                            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                                 <FormControl>
-                                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                                    <Checkbox
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                    />
                                 </FormControl>
-                                <div className='space-y-1 leading-none'>
+                                <div className="space-y-1 leading-none">
                                     <FormLabel>Featured?</FormLabel>
                                 </div>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <Button variant='destructive' type='submit'>
+                    <Button variant="destructive" type="submit">
                         Submit
                     </Button>
                 </form>
             </Form>
         </div>
-    )
-}
+    );
+};
 
-export default ProductAdd
+export default ProductAdd;

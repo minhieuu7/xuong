@@ -16,7 +16,7 @@ const HeaderTable = ({ table }: any) => {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="ml-auto">
-                        Columns
+                        Tùy chỉnh cột
                         <ChevronDown className="ml-2 h-4 w-4" />
                     </Button>
                 </DropdownMenuTrigger>
@@ -27,6 +27,7 @@ const HeaderTable = ({ table }: any) => {
                             column.getCanHide(),
                         )
                         .map((column: any) => {
+                            console.log(column);
                             return (
                                 <DropdownMenuCheckboxItem
                                     key={column.id}
@@ -36,7 +37,8 @@ const HeaderTable = ({ table }: any) => {
                                         column.toggleVisibility(!!value)
                                     }
                                 >
-                                    {column.id}
+                                    {column?.columnDef?.header}
+                                    {/* {column?.id} */}
                                 </DropdownMenuCheckboxItem>
                             );
                         })}

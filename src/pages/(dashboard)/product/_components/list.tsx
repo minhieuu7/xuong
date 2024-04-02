@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+
 import {
     ColumnFiltersState,
     SortingState,
@@ -20,7 +22,7 @@ import FooterTable from "./FooterTable";
 import HeaderTable from "./HeaderTable";
 
 const ProductList = () => {
-    const { data } = useProductQuery();
+    const { data, isLoading } = useProductQuery({ _expand: "category" });
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
@@ -64,7 +66,50 @@ const ProductList = () => {
                         <HeaderTable table={table} />
                     </div>
                     <div className="rounded-md border">
-                        <DataTable table={table} columns={columns} />
+                        {isLoading ? (
+                            <>
+                                <table className="w-full">
+                                    <thead>
+                                        <th>
+                                            <Skeleton className="w-full h-[25px] rounded-full" />
+                                        </th>
+                                        <th>
+                                            <Skeleton className="w-full h-[25px] rounded-full" />
+                                        </th>
+                                        <th>
+                                            <Skeleton className="w-full h-[25px] rounded-full" />
+                                        </th>
+                                        <th>
+                                            <Skeleton className="w-full h-[25px] rounded-full" />
+                                        </th>
+                                        <th>
+                                            <Skeleton className="w-full h-[25px] rounded-full" />
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <Skeleton className="w-full h-[25px] rounded-full" />
+                                            </td>
+                                            <td>
+                                                <Skeleton className="w-full h-[25px] rounded-full" />
+                                            </td>
+                                            <td>
+                                                <Skeleton className="w-full h-[25px] rounded-full" />
+                                            </td>
+                                            <td>
+                                                <Skeleton className="w-full h-[25px] rounded-full" />
+                                            </td>
+                                            <td>
+                                                <Skeleton className="w-full h-[25px] rounded-full" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </>
+                        ) : (
+                            <DataTable table={table} column={columns} />
+                        )}
                     </div>
                     <div className="flex items-center justify-end space-x-2 py-4">
                         <FooterTable table={table} />

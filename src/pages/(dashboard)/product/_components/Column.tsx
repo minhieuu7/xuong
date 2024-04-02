@@ -52,10 +52,13 @@ export const columns: ColumnDef<IProduct>[] = [
     {
         accessorKey: "category",
         header: "Danh mục",
+        cell: ({ row }) => {
+            return <div>{row?.original?.category?.name}</div>;
+        },
     },
     {
         accessorKey: "price",
-        header: () => <strong className="text-red">Giá</strong>,
+        header: "Giá",
         cell: ({ row }) => {
             const amount = parseFloat(row.getValue("price"));
 
@@ -78,7 +81,7 @@ export const columns: ColumnDef<IProduct>[] = [
     },
     {
         accessorKey: "countInStock",
-        header: () => <div>Số lượng</div>,
+        header: "Số lượng",
         cell: ({ row }) => {
             const amount = parseFloat(row.getValue("countInStock"));
             return <div className="font-medium">{amount}</div>;

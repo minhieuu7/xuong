@@ -1,6 +1,6 @@
 import LayoutAdmin from "@/pages/(dashboard)/layout";
 import ProductAdd from "@/pages/(dashboard)/product/_components/add";
-import ProductEditPage from "@/pages/(dashboard)/product/_components/edit";
+import ProductEditPage from "@/pages/(dashboard)/product/_components/Edit";
 import ProductManagement from "@/pages/(dashboard)/product/page";
 import Signin from "@/pages/(website)/(auth)/Signin";
 import NotFound from "@/pages/(website)/404/page";

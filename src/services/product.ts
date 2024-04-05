@@ -1,7 +1,15 @@
 import instance from '@/configs/axios'
 import { IProduct } from '@/common/types/product'
-
-const { token } = JSON.parse(localStorage.getItem('user') || '');
+const userDataString = localStorage.getItem('user');
+let token = '';
+if (userDataString) {
+    try {
+        const userData = JSON.parse(userDataString);
+        token = userData.token || '';
+    } catch (error) {
+        console.error('Không thể phân tích dữ liệu từ localStorage:', error);
+    }
+}
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getAllProducts = async (params?: any): Promise<IProduct[]> => {
     try {

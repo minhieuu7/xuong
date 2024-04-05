@@ -1,5 +1,5 @@
 import LayoutAdmin from "@/pages/(dashboard)/layout";
-import ProductAdd from "@/pages/(dashboard)/product/_components/add";
+import ProductAdd from "@/pages/(dashboard)/product/_components/Add";
 import ProductEditPage from "@/pages/(dashboard)/product/_components/Edit";
 import ProductManagement from "@/pages/(dashboard)/product/page";
 import Signin from "@/pages/(website)/(auth)/Signin";

@@ -1,24 +1,22 @@
-import { useProductQuery } from '@/common/hooks/useProductQuery'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import { Link, useParams } from 'react-router-dom'
+import { useProductQuery } from "@/common/hooks/useProductQuery";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
 const DetailProduct = () => {
-    const { id } = useParams()
-    const { data: product, isLoading } = useProductQuery({ id: id! })
-    console.log(product)
+    const { id } = useParams();
+    const { data: product, isLoading } = useProductQuery({ id: id! });
     const { data: relatedProduct } = useQuery({
-        queryKey: ['RELATED_PRODUCT'],
+        queryKey: ["RELATED_PRODUCT"],
         queryFn: async () => {
             const { data } = await axios.get(
-                `http://localhost:8080/api/v1/products/${product.category}/related/${product._id}`
-            )
-            return data
-        }
-    })
+                `http://localhost:8080/api/v1/products/${product.category}/related/${product._id}`,
+            );
+            return data;
+        },
+    });
 
-    if (isLoading) return <p>Loading...</p>
-    console.log('relatedProduct', relatedProduct)
+    if (isLoading) return <p>Loading...</p>;
     return (
         <div>
             {product?.name}
@@ -31,7 +29,7 @@ const DetailProduct = () => {
                 </div>
             ))}
         </div>
-    )
-}
+    );
+};
 
-export default DetailProduct
+export default DetailProduct;

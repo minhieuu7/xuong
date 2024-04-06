@@ -27,7 +27,6 @@ const HeaderTable = ({ table }: any) => {
                             column.getCanHide(),
                         )
                         .map((column: any) => {
-                            console.log(column);
                             return (
                                 <DropdownMenuCheckboxItem
                                     key={column.id}

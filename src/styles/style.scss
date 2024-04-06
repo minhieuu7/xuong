@@ -1,8 +1,8 @@
-@use '_mixin' as m;
-$font-poppins: 'Poppins', sans-serif;
+@use "_mixin" as m;
+$font-poppins: "Poppins", sans-serif;
 
 body {
-    font-family: $font-poppins;
+    // font-family: $font-poppins;
 }
 img {
     max-width: 100%;

@@ -1,6 +1,5 @@
 import LayoutAdmin from "@/pages/(dashboard)/layout";
-import ProductAdd from "@/pages/(dashboard)/product/_components/Add";
-import ProductEditPage from "@/pages/(dashboard)/product/_components/Edit";
+import FormProduct from "@/pages/(dashboard)/product/_components/Form";
 import ProductManagement from "@/pages/(dashboard)/product/page";
 import Signin from "@/pages/(website)/(auth)/Signin";
 import NotFound from "@/pages/(website)/404/page";
@@ -9,12 +8,12 @@ import CartPage from "@/pages/(website)/cart/page";
 import ContactPage from "@/pages/(website)/contact/page";
 import HomePage from "@/pages/(website)/home/page";
 import LayoutWebsite from "@/pages/(website)/layout";
+import OrderPage from "@/pages/(website)/order/page";
 import CategoryDetail from "@/pages/(website)/product/category/detail/page";
 import DetailProduct from "@/pages/(website)/product/detail/page";
 import ShopPage from "@/pages/(website)/product/page";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import OrderPage from "@/pages/(website)/order/page";
 
 const Router = () => {
     return (
@@ -40,11 +39,8 @@ const Router = () => {
                     }
                 >
                     <Route path="products" element={<ProductManagement />} />
-                    <Route path="products/add" element={<ProductAdd />} />
-                    <Route
-                        path="products/:id/edit"
-                        element={<ProductEditPage />}
-                    />
+                    <Route path="products/add" element={<FormProduct />} />
+                    <Route path="products/:id/edit" element={<FormProduct />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>
